@@ -5,8 +5,7 @@ n = 25
 rrange = 500
 numbers = [ random.randrange(rrange) for i in range(n) ]
 
-## find the max and min, then find the midpoint
-
+# select the smallest element in L
 def select_smallest(L):
     if not L:
         return -1
@@ -25,6 +24,7 @@ def select_smallest(L):
     elif len(e) > 0:
       return e[0]
 
+# select the largest element in L
 def select_largest(L):
     if not L:
         return -1
@@ -45,14 +45,7 @@ def select_largest(L):
 
 
 def minimize_square(L):
-  set_n = { n for n in L }
-  minimum = select_smallest(list(set_n))
-  maximum = select_largest(list(set_n))
-  midpoint = (1.0 * (maximum + minimum)) / 2
-  return midpoint
+  # mean is the solution
+  mean = (1.0 * sum(L)) / (len(L))
+  return mean
 
-numbers = [2,2,3,4]
-print(sorted(numbers))
-print(select_smallest(numbers))
-print(select_largest(numbers))
-print(minimize_square(numbers))
