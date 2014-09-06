@@ -1,0 +1,120 @@
+Deterministic Finite Automata
+=============================
+
+- alphabet - any finite set of symbols
+- string - over an alphabet (∑), is a list, each element of which is a member of the alphabet (∑)
+- length of a string - its number of positions
+- 𝝐 stands for the empty string (string of length 0)
+- language: {0, 1}* -> { e, 0, 1, 00, 01, 10, 11, 000, 001, ... }
+- language is a ⊆ of ∑* for some alphabet ∑
+- formal definition of DFA
+  - 1. finite set of states (Q)
+  - 2. input alphabet (∑)
+  - 3. transition function (δ)
+  - 4. start state (q0, in Q)
+  - 5. final states (F ⊆ of Q) - or accepting states
+
+Transition Function
+- takes two arguments: a state and an input symbol
+- δ(q, a) - the state that the DFA goes to when it is in state q and input a is received
+- always a next state - add a dead state if no transition - transitions to self for all inputs
+- deterministic - unique transition for every state and input symbol
+
+Graph Representation of DFA's
+- nodes = states
+- arcs represent transition function
+  - arc from state p to state q labeled by all
+    those inputs symbols that have transitions from p to q
+- arrow labeled 'Start' to the start state
+- Final states have double circles
+
+Transition Table Representation of DFA's
+
+    ___________
+      0  |  1
+    _____|_____
+*A  | A  |  B
+*B  | B  |  C
+ C  | C  |  C
+
+- final states are starred
+- rows = states
+- columns = input symbols
+- each entry is δ of the row and the column
+
+String and Symbols
+- convention - end of alphabet lower-case are states
+- convetion - beginning of alphabet lower-case are input symbols
+
+Extended Transition Function
+- extended δ is computer for state q and inputs a1a2..an by following
+  a path in the transition graph, starting at q and seleting the arcs with labels
+  a1, a2, ..., an in turn
+
+Inductive Definition of Extended δ
+- Induction on length of string
+- Basis: δ(q, 𝝐) = q
+- Induction: δ(q, wa) = δ( δ(q, w), a )
+
+Language of a DFA
+- Automata of all kinds define languages
+- If A is an automaton, L(A) is its language
+- For a DFA A, L(A) is the set of string labeling paths from the start state to a final state
+- Formally: L(A) = the set of strings w such that δ(q0, w) is in F
+
+- example of language: { w | w is in {0,1}* and w does not have two consecutive 1's }
+
+Proofs of Set Equivalence
+- often need to prove that two descriptions of sets are in fact the same set
+- In general, to prove S = T, we need to prove two parts:
+  - S ⊆ T and T ⊆ S
+  - 1. If w is in S, then w is in T
+  - 2. If w is in T, then w is in S
+- S = language of our running DFA
+- T = "no consecutive 1's"
+- Exapnd the inductive hypothesis to be more detailed than the statement you are trying to prove
+- Inductive Hypothesis
+  - 1. If δ(A, w) = A, then w has no consecutive 1's and does not end in 1
+  - 2. If δ(A, w) = B, then w has no consecutive 1's and ends in a single 1
+  - Basis: |w| = 0, i.e. w = 𝝐
+    - (1.) holds because 𝝐 has no 1's at all
+    - (2.) holds vacuosly because δ(A, 𝝐) is not B (F -> F : is true) 
+  - Inductive Step
+    - Assume 1. and 2. are true for strings shorter than w, where |w| is at least 1
+    - Because w is not empty, we can write w = xa, where a is the last symbol of w, and
+      x is the string the precedes
+    - Prove (1) and (2) for w = xa
+    - Prove (1): According to DFA, δ(A, w) = A, δ(A, x) must be A or B, by IH x has no 11's
+      - Thus w has no 11's and does not end in 1
+    - Prove (2): w = xa: If δ(A, w) = B, then w has no 11's and ends in 1
+      - δ(A, 2) = B, δ(A, x) must be A and a must be 1
+      - By IH, x has no 11's and does not end in 1
+      - Thus w has no 11's and ends in 1
+  - Part 2: T ⊆ S
+    - prove: if w has no 11's then w is acceptedy by the DFA
+    - Contrapositive: If w is not accepted by DFA when w has 11.
+    - DFA has a unique transition from every state on every input symbol, each w gets the DFA to one state
+    - The only way to get to C (δ(A, w) = C) is if w = x1y, x gets to B, and y is the tail of w
+      that follows what gets to C for the first time
+    - If δ(A, x) = B, then x = z1 for some z
+    - Thus, w = z11y and has 11
+
+Regular Languages
+- a language L is regular if it is the language acepted by some DFA
+  - DFA must accept only the strings in L, no others
+- some languages are not regular
+  - e.g. L = { 0^n1^n | n >= 1 }
+  - e.g. balanced parantheses
+- Regular Language Example: L = { w | w in { 0, 1 }* and w, viewed as a binary integer is divisible by 23 }
+  - The DFA
+      - 23 states: [ 0, 22 ]
+      - Correspond to the 23 remainders of an integer divided by 23
+      - start and only final state is 0
+      - Transitions
+        - δ(0, w) = i % 23
+        - δ(i % 23, 0) = (2i) % 23
+        - δ(i % 23, 1) = (2i + 1) % 23
+- theorem - reverse of regular language is a regular language - difficult to construct DFAs sometimes
+- there are 2^n strings of 0's and 1's of length n. In a language specified above, each of these strings can show up or not show up. Excluding the empty case, there are 2^(2^n)−1 such languages. That is non-empty langauges
+that contain only the strings of 0's and 1's of length n
+

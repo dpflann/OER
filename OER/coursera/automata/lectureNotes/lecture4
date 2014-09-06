@@ -1,0 +1,106 @@
+Nondeterministic Finite Automata
+
+Nondeterminism
+- a nondeterministic finite automato has the ability to be in several states a once
+- transitions from a state on an input symbol can be to any set of states
+- start in one start state
+- accept if any sequence of choices leads to a final state
+- intuitively: the NFA always "guess right"
+- Example: Chessboard moves
+  - move to red square
+  - move to black square
+  - start state - upper left corner
+  - final state = lower right corner
+
+Formal NFA
+- a finite set of states, Q
+- an input alphabet, Σ
+- a transition function, δ
+- a start state in Q, q0
+- a set of final states F subset Q
+
+Transition Function of an NFA
+- δ(q, a) is a set of states
+- Extend to strings as follows:
+  - Basis: δ(q, epsiolon) = { q }
+  - Induction: δ(q, wa) = the union over all states p in δ(q, w) and δ(p, a)
+
+Language of an NFA
+- a string w is accepted by an NFA if δ(q0, w) contains at least one final state
+- the language of the NFA is the set of strings it accepts
+
+Equivalence of DFA's, NFA's
+- a DFA can be turned into an NFA that accepts the same language
+- If δ_D(q, a) = p, let the NFA have δ_N(q, a) = { p }
+- Then the NFA is always in a set containing exactly one state - the state the DFA is in after reading
+  the same input
+- The NFA will look so much like the DFA
+- For any NFA there is a DFA that accepts the same language
+- proof is the subset construction
+- the number of states of the DFA can be exponential in the number of states of the NFA
+- NFA's accept exactly the regular languages
+
+Subset Construction
+- Given an NFA with states Q, inputs Σ, transition function δ_N, start state q0, and final states F,
+  construct the equivalent DFA with:
+    - States 2^Q (set of all subsets of Q), powerset
+    - Inputs Σ
+    - Start state { q0 }
+    - Final states = all those with a member in F
+- Critical Point:
+  - The DFA states have names that are sets of NFA states
+  - But as a DFA state, an expression like { p, q } must be understood to be a single symbol, not as a set
+- The transition function δ_D is defined by:
+  δ_d( { q1, ..., qk }, a) is the union over all i = 1, ..., k of δ_N(qi, a) * Remember critical point
+
+Proof of Equivlance: Subset Construction
+- Show by induction on |w| that:
+  δ_N(q0, w) = δ_D({ q0 }, w)
+  - Basis: w = 𝝐: δ_N(q0, 𝝐) = δ_D({ q0 }, 𝝐) = { q0 }
+- Induction:
+  - Assume IH for strings shorter than w
+  - Let w = xa; IH holds fo x
+  - Let δ_N(qo, x) = δ_D({ q0 }, x) = S
+  - Let T = union over all states p in S of δ_N(p, a)
+  - Then δ_N(q0, w) = δ_D({ q0 }, w) = T
+
+NFA's with 𝝐-Transitions (𝝐-NFA)
+- we can allow state-to-state transitions on 𝝐 (empty) input
+- there transitions are done spontaneously, without looking at the input string
+- a convenience at times, but still only regular languages are accepted
+
+Closure of States
+- CL(q) = set of states you can reach from state q following only arcs labeled 𝝐
+- closure of a set of states = union of the closure of each state
+- can always reach q on 𝝐 - that is CL(q) always contains q
+
+Extended Delta
+- Intution: ˆδ(q, w) is the set of states you can reach from q following a path labeled w
+- Basis: ˆδ(q, 𝝐) = CL(q)
+- Induction: δ(q, xa) is computed by
+  1. Start with ˆδ(q, x) = S
+  2. Take the union of CL( δ(q, a) ) for all p in S
+- Language of an 𝝐-NFA is the set of strings w such that δ(q0, w) contains a final state
+
+Equivalence of NFA, 𝝐-NFA
+- every NFA is an 𝝐-NFA
+  - it just has no transitions on 𝝐
+- Converse requires us to take an 𝝐-NFA and construct an NFA that accepts the same language
+- We do so by combining 𝝐-transitions with the next transition on a real input
+- Start with an 𝝐-NFA with states Q, inputs Σ, start state q0, final states F, and transition
+  function δ_E
+- Construct an "ordinary" NFA with states Q, inputs Σ, start state q0, final states F', and transition
+  function δ_N
+- Compute δ_N(q, a) as follows:
+  - 1. Let S = CL(q)
+  - δ_N(q, a) is the union over all p in S of δ_E(p, q)
+- F' = the set of states q such that CL(q) contains a state of F
+- Prove by induction on |w| that
+  CL( δ_N(q0, w) ) = ˆδ_E(q0, w)
+- Thus, the 𝝐-NFA accepts w if and only if the "ordinary" NFA does
+
+Summary
+- DFA's, NFA's, and 𝝐-NFA's all accept exactly the same set of languages: the regular languages
+- The NFA types are easier to design and may have exponentially fewer states than a DFA
+- Only a DFA can be implemented
+
