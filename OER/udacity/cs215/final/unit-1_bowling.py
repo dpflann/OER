@@ -8,7 +8,7 @@ the score of a ten-pin bowling game.  balls is a list of integers indicating
 how many pins are knocked down with each ball.  For example, a perfect game of
 bowling would be described with:
 
-    >>> bowling([10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
+    #>>> bowling([10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
     300
 
 The rules of bowling are as follows:
@@ -36,7 +36,7 @@ For example, bowling([10, 7, 3, ...]) means that you get a strike, you score
 """
 
 
-def bowling(balls):
+def bowling_one(balls):
     """Compute the total score for a player's game of bowling.
     """
 
@@ -62,14 +62,30 @@ def bowling(balls):
     return total_score
 
 
-def test_bowling():
-    assert   0 == bowling([0] * 20)
-    assert  20 == bowling([1] * 20)
-    assert  80 == bowling([4] * 20)
-    assert 190 == bowling([9,1] * 10 + [9])
-    assert 300 == bowling([10] * 12)
-    assert 200 == bowling([10, 5,5] * 5 + [10])
-    assert  11 == bowling([0,0] * 9 + [10,1,0])
-    assert  12 == bowling([0,0] * 8 + [10, 1,0])
+# Norvig-ian Solution
+def bowling_two(balls, frame=1):
+    """Compute the total score for a player's game of bowling_two.
+    """
 
-test_bowling()
+    if len(balls) <= 2 or frame == 10:
+        return sum(balls)
+    elif balls[0] == 10:
+        return balls[0] + balls[1] + balls[2] + bowling_two(balls[1:], frame+1) # strike
+    elif balls[0] + balls[1] == 10:
+        return balls[0] + balls[1] + balls[2] + bowling_two(balls[2:], frame+1) # spare
+    else:
+        return balls[0] + balls[1] + bowling_two(balls[2:], frame+1) # open
+
+
+def test_bowling(bowling_function):
+    assert   0 == bowling_function([0] * 20)
+    assert  20 == bowling_function([1] * 20)
+    assert  80 == bowling_function([4] * 20)
+    assert 190 == bowling_function([9,1] * 10 + [9])
+    assert 300 == bowling_function([10] * 12)
+    assert 200 == bowling_function([10, 5,5] * 5 + [10])
+    assert  11 == bowling_function([0,0] * 9 + [10,1,0])
+    assert  12 == bowling_function([0,0] * 8 + [10, 1,0])
+
+test_bowling(bowling_one)
+test_bowling(bowling_two)
