@@ -62,6 +62,7 @@ def bowling_one(balls):
     return total_score
 
 
+
 # Norvig-ian Solution
 def bowling_two(balls, frame=1):
     """Compute the total score for a player's game of bowling_two.
@@ -70,11 +71,26 @@ def bowling_two(balls, frame=1):
     if len(balls) <= 2 or frame == 10:
         return sum(balls)
     elif balls[0] == 10:
-        return balls[0] + balls[1] + balls[2] + bowling_two(balls[1:], frame+1) # strike
+        return balls[0] + balls[1] + balls[2] + bowling_two(balls[1:], frame+1)  # strike
     elif balls[0] + balls[1] == 10:
-        return balls[0] + balls[1] + balls[2] + bowling_two(balls[2:], frame+1) # spare
+        return balls[0] + balls[1] + balls[2] + bowling_two(balls[2:], frame+1)  # spare
     else:
-        return balls[0] + balls[1] + bowling_two(balls[2:], frame+1) # open
+        return balls[0] + balls[1] + bowling_two(balls[2:], frame+1)  # open
+
+
+# Concise iteration
+def bowling_three(balls):
+    """Compute the total score for a player's game of bowling_two.
+    """
+
+    score = 0
+    i = 0
+    for frame in range(10):
+        score += balls[i] + balls[i + 1]
+        if balls[i] + balls[i + 1] >= 10:
+            score += balls[i + 2]
+        i += 2 if balls[i] < 10 else 1
+    return score
 
 
 def test_bowling(bowling_function):
@@ -89,3 +105,4 @@ def test_bowling(bowling_function):
 
 test_bowling(bowling_one)
 test_bowling(bowling_two)
+test_bowling(bowling_three)
