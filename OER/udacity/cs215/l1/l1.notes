@@ -1,6 +1,0 @@
-> "The amount of (code) change should be proportional to the amount of change in the conceptualization." - Peter Norvig
-> Dimensions of Programming (e.g. { Correctness, Efficiency, Features, Elegance } )
-> "Elegance is not optional."
-> "The best is the enemy of the good." - Voltaire
-> Functions: Computing vs. Doing - easier to test 'computing' which returns a result versus 'doing' which affects the state but does not return a result
-> DRY - "Don't Repeat Yourself."
