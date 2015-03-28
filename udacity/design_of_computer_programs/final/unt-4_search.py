@@ -137,8 +137,8 @@ def show(state, N=N):
             board[s] = c
     # Now print it out
     for i,s in enumerate(board):
-        print s,
-        if i % N == N - 1: print
+        print(s)
+        if i % N == N - 1: print()
 
 # Here we see the grid and locs functions in use:
 
@@ -192,4 +192,3 @@ def shortest_path_search(start, successors, is_goal):
 def path_actions(path):
     "Return a list of actions in this path."
     return path[1::2]
-
