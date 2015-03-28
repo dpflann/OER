@@ -169,10 +169,7 @@ def same_name(name1, name2):
 
 def is_poly(x):
     "Return true if x is a poly (polynomial)."
-    try:
-        return hasattr(x, '__call__') and x.__getattribute__('coefs')
-    except AttributeError:
-        return False
+    return hasattr(x, '__call__') and hasattr(x, 'coefs')
 
 def add(p1, p2):
     "Return a new polynomial which is the sum of polynomials p1 and p2."
