@@ -31,10 +31,10 @@ we will store the coefficients in the .coefs attribute of the function, so we ha
 And finally, the name of the function will be the formula given above, so you should
 have something like this:
 
-    >>> p1
+#    >>> p1
     <function 30 * x**2 + 20 * x + 10 at 0x100d71c08>
 
-    >>> p1.__name__
+#    >>> p1.__name__
     '30 * x**2 + 20 * x + 10'
 
 Make sure the formula used for function names is simplified properly.
@@ -51,17 +51,77 @@ Your task is to write the function poly and the following additional functions:
 They are described below; see the test_poly function for examples.
 """
 
+# Helper functions
+def construct_name(coefs):
+    zero_base = '%d'
+    one_base = '%d * x'
+    higher_base = '%d * x**%d'
+    higher_base_one_coef = 'x**%d'
+    poly_pieces = []
+    for i, c in enumerate(coefs):
+        if c == 0:
+            continue
+        elif i == 0:
+            poly_pieces.append(zero_base % c)
+        elif i == 1:
+            if c == 1:
+                poly_pieces.append('x')
+            else:
+                poly_pieces.append(one_base % c)
+        else:
+            if c == 1:
+                poly_pieces.append(higher_base_one_coef % i)
+            else:
+                poly_pieces.append(higher_base % (c, i))
+    name = ' + '.join(reversed(poly_pieces))
+    return name
 
+def pad_and_zip(p1, p2):
+    longest_poly = len(max([p1.coefs, p2.coefs], key=len))
+    p1_list = list(p1.coefs)
+    p2_list = list(p2.coefs)
+    p1_list.extend([0]*(longest_poly - len(p1.coefs)))
+    p2_list.extend([0]*(longest_poly - len(p2.coefs)))
+    return zip(p1_list, p2_list)
+
+def simplify(distributed):
+    order = max(distributed)[0]
+    compacted = {}
+    for i, c in distributed:
+        if i in compacted:
+            compacted[i] += c
+        else:
+            compacted[i] = c
+    coefs = tuple([compacted[i] for i in range(order + 1)])
+    return coefs
+
+# Polynomial Functions
 def poly(coefs):
     """Return a function that represents the polynomial with these coefficients.
     For example, if coefs=(10, 20, 30), return the function of x that computes
     '30 * x**2 + 20 * x + 10'.  Also store the coefs on the .coefs attribute of
     the function, and the str of the formula on the .__name__ attribute.'"""
     # your code here (I won't repeat "your code here"; there's one for each function)
-
+    # construct polynomial
+    # simplify
+    # construct function
+    # set coefs
+    # set __name__
+    # returning a function that takes in an input value for x
+    if not coefs:
+        return None
+    def calculate(x):
+        sum = 0
+        for i, c in enumerate(coefs):
+            sum += c * x**i
+        return sum
+    # set attributes of function
+    calculate.coefs = coefs
+    calculate.__name__ = construct_name(coefs)
+    return calculate
 
 def test_poly():
-    global p1, p2, p3, p4, p5, p9 # global to ease debugging in an interactive session
+    #global p1, p2, p3, p4, p5, p9 # global to ease debugging in an interactive session
 
     p1 = poly((10, 20, 30))
     assert p1(0) == 10
@@ -76,9 +136,10 @@ def test_poly():
     assert p3.__name__ == 'x**3'
     p9 = mul(p3, mul(p3, p3))
     assert p9(2) == 512
-    p4 =  add(p1, p3)
+    p4 = add(p1, p3)
     assert same_name(p4.__name__, 'x**3 + 30 * x**2 + 20 * x + 10')
 
+    assert mul(poly((10, 20, 30)), poly((1, 2, 3))).coefs == (10, 40, 100, 120, 90)
     assert same_name(poly((1, 1)).__name__, 'x + 1')
     assert same_name(power(poly((1, 1)), 10).__name__,
             'x**10 + 10 * x**9 + 45 * x**8 + 120 * x**7 + 210 * x**6 + 252 * x**5 + 210' +
@@ -86,7 +147,6 @@ def test_poly():
 
     assert add(poly((10, 20, 30)), poly((1, 2, 3))).coefs == (11,22,33)
     assert sub(poly((10, 20, 30)), poly((1, 2, 3))).coefs == (9,18,27)
-    assert mul(poly((10, 20, 30)), poly((1, 2, 3))).coefs == (10, 40, 100, 120, 90)
     assert power(poly((1, 1)), 2).coefs == (1, 2, 1)
     assert power(poly((1, 1)), 10).coefs == (1, 10, 45, 120, 210, 252, 210, 120, 45, 10, 1)
 
@@ -109,23 +169,41 @@ def same_name(name1, name2):
 
 def is_poly(x):
     "Return true if x is a poly (polynomial)."
-    ## For examples, see the test_poly function
+    try:
+        return hasattr(x, '__call__') and x.__getattribute__('coefs')
+    except AttributeError:
+        return False
 
 def add(p1, p2):
     "Return a new polynomial which is the sum of polynomials p1 and p2."
-
+    if not is_poly(p1) and not is_poly(p2):
+        raise ValueError()
+    zipped_polys = pad_and_zip(p1, p2)
+    coefs = tuple([c_1 + c_2 for c_1, c_2 in zipped_polys])
+    return poly(coefs)
 
 def sub(p1, p2):
     "Return a new polynomial which is the difference of polynomials p1 and p2."
-
+    if not is_poly(p1) and not is_poly(p2):
+        raise ValueError()
+    zipped_polys = pad_and_zip(p1, p2)
+    coefs = tuple([c_1 - c_2 for c_1, c_2 in zipped_polys])
+    return poly(coefs)
 
 def mul(p1, p2):
     "Return a new polynomial which is the product of polynomials p1 and p2."
-
+    if not is_poly(p1) and not is_poly(p2):
+        raise ValueError()
+    distributed = [(i_1 + i_2, c_1 * c_2) for i_1, c_1 in enumerate(p1.coefs) for i_2, c_2 in enumerate(p2.coefs)]
+    coefs = simplify(distributed)
+    return poly(coefs)
 
 def power(p, n):
     "Return a new polynomial which is p to the nth power (n a non-negative integer)."
-
+    p1 = p
+    for _ in range(n-1):
+        p1 = mul(p, p1)
+    return p1
 
 """
 If your calculus is rusty (or non-existant), here is a refresher:
@@ -141,11 +219,14 @@ to the function integral (withh default C=0).
 
 def deriv(p):
     "Return the derivative of a function p (with respect to its argument)."
-
+    coefs = simplify([(i - 1, c * i) for i, c in enumerate(p.coefs)])
+    return poly(coefs)
 
 def integral(p, C=0):
     "Return the integral of a function p (with respect to its argument)."
-
+    integ = [(i + 1, c / (i + 1)) for i, c in enumerate(p.coefs)] + [(0, 0)]
+    coefs = simplify(integ)
+    return poly(coefs)
 """
 Now for an extra credit challenge: arrange to describe polynomials with an
 expression like '3 * x**2 + 5 * x + 9' rather than (9, 5, 3).  You can do this
@@ -175,3 +256,4 @@ def test_poly2():
     assert p1(100) == newp1(100)
     assert same_name(p1.__name__,newp1.__name__)
 
+test_poly()
