@@ -106,6 +106,7 @@ puzzle1 = (
 
 N = 8
 
+
 def solve_parking_puzzle(start, N=N):
     """Solve the puzzle described by the starting position (a tuple
     of (object, locations) pairs).  Return a path of [state, action, ...]
@@ -116,9 +117,11 @@ def solve_parking_puzzle(start, N=N):
 # and a way to visualize states.
 # You will do that by defining the following two functions:
 
+
 def locs(start, n, incr=1):
     "Return a tuple of n locations, starting at start and incrementing by incr."
     return tuple(start + i * incr for i in range(n))
+
 
 def wall(goal_index=-1, N=N, wall_char='|'):
     if goal_index == -1:
@@ -132,6 +135,7 @@ def wall(goal_index=-1, N=N, wall_char='|'):
     middle = middle_to_goal + middle_goal + middle_from_goal
     bottom = list(range(N * N - N, N * N))
     return (wall_char, tuple(top + middle + bottom))
+
 
 def grid(cars, N=N):
     """Return a tuple of (object, locations) pairs -- the format expected for
@@ -213,6 +217,7 @@ def shortest_path_search(start, successors, is_goal):
                 else:
                     frontier.append(path2)
     return []
+
 
 def path_actions(path):
     "Return a list of actions in this path."
