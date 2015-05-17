@@ -80,6 +80,8 @@ pairs, where each pair is a tuple and the locations are a tuple.  Here is the
 initial state for the problem above in this format:
 """
 
+from itertools import chain
+
 puzzle1 = (
  ('@', (31,)),
  ('*', (26, 27)),
@@ -116,7 +118,20 @@ def solve_parking_puzzle(start, N=N):
 
 def locs(start, n, incr=1):
     "Return a tuple of n locations, starting at start and incrementing by incr."
+    return tuple(start + i * incr for i in range(n))
 
+def wall(goal_index=-1, N=N, wall_char='|'):
+    if goal_index == -1:
+        goal_index = int(N * N / 2 - 1)
+    skip = goal_index + 1 - N
+    N_skip = int(skip / N)
+    top = list(range(0, N))
+    middle_to_goal = list(chain.from_iterable([[r * N, r * N + N - 1] for r in range(1, N_skip)]))
+    middle_goal = [skip]
+    middle_from_goal = list(chain.from_iterable([[r * N, r * N + N - 1] for r in range(N_skip + 1, N - 1)]))
+    middle = middle_to_goal + middle_goal + middle_from_goal
+    bottom = list(range(N * N - N, N * N))
+    return (wall_char, tuple(top + middle + bottom))
 
 def grid(cars, N=N):
     """Return a tuple of (object, locations) pairs -- the format expected for
@@ -126,6 +141,12 @@ def grid(cars, N=N):
     pair, like ('@', (31,)), to indicate this. The variable 'cars'  is a
     tuple of pairs like ('*', (26, 27)). The return result is a big tuple
     of the 'cars' pairs along with the walls and goal pairs."""
+    size = N * N
+    goal_index = int(size / 2 - 1)
+    goal = ('@', (goal_index,))
+    _wall = wall(goal_index=goal_index)
+    _grid = [goal, _wall] + list(cars)
+    return tuple(_grid)
 
 
 def show(state, N=N):
@@ -136,9 +157,13 @@ def show(state, N=N):
         for s in squares:
             board[s] = c
     # Now print it out
-    for i,s in enumerate(board):
-        print(s)
-        if i % N == N - 1: print()
+    s_ = ''
+    for i, s in enumerate(board):
+        s_ += ' %s ' % s
+        if i % N == N - 1:
+            s_ += '\n'
+    print(s_)
+
 
 # Here we see the grid and locs functions in use:
 
@@ -192,3 +217,6 @@ def shortest_path_search(start, successors, is_goal):
 def path_actions(path):
     "Return a list of actions in this path."
     return path[1::2]
+
+
+show(puzzle1)
