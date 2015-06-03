@@ -223,10 +223,22 @@ def path_actions(path):
     "Return a list of actions in this path."
     return path[1::2]
 
+
 def is_goal(state, goal_location=31, target_object='*'):
     """Determine if target_object is in goal_location. Specific to this problem's context."""
     for obj, loc in state:
         return obj == target_object and loc == goal_location
+
+
+def successors(state):
+    """Calculate all possible next states from this given state.
+
+    Determine which objects can be acted upon and perform a single movement action on each.
+    Returns a dict of state: action where state is a tuple of tuples of objects and locations
+    and an action is a tuple of object and total distance moved.
+    """
+
+    pass
 
 ## Testing and Solving ##
 show(puzzle1)
