@@ -223,5 +223,10 @@ def path_actions(path):
     "Return a list of actions in this path."
     return path[1::2]
 
+def is_goal(state, goal_location=31, target_object='*'):
+    """Determine if target_object is in goal_location. Specific to this problem's context."""
+    for obj, loc in state:
+        return obj == target_object and loc == goal_location
 
+## Testing and Solving ##
 show(puzzle1)
