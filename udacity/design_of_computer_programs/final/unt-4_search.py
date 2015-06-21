@@ -307,3 +307,5 @@ show(puzzle2)
 show(puzzle3)
 
 solve_parking_puzzle(puzzle1)
+solve_parking_puzzle(puzzle2)
+solve_parking_puzzle(puzzle3)
