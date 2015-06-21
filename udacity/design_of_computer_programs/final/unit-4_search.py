@@ -119,7 +119,7 @@ def solve_parking_puzzle(start, N=N):
     print('Solution:')
     show(shortest_path[-1])
     print('Actions: ', actions)
-    return sorted(actions)
+    return shortest_path
 
 # But it would also be nice to have a simpler format to describe puzzles,
 # and a way to visualize states.
