@@ -112,6 +112,14 @@ def solve_parking_puzzle(start, N=N):
     of (object, locations) pairs).  Return a path of [state, action, ...]
     alternating items; an action is a pair (object, distance_moved),
     such as ('B', 16) to move 'B' two squares down on the N=8 grid."""
+    print('Start:')
+    show(start)
+    shortest_path = shortest_path_search(start, successors, is_goal)
+    actions = path_actions(shortest_path)
+    print('Solution:')
+    show(shortest_path[-1])
+    print('Actions: ', actions)
+    return sorted(actions)
 
 # But it would also be nice to have a simpler format to describe puzzles,
 # and a way to visualize states.
@@ -227,8 +235,7 @@ def path_actions(path):
 def is_goal(state, goal_location=31, target_object='*'):
     """Determine if target_object is in goal_location. Specific to this problem's context."""
     for obj, loc in state:
-        return obj == target_object and loc == goal_location
-
+        return obj == target_object and goal_location in loc
 
 def successors(state):
     """Calculate all possible next states from this given state.
@@ -236,9 +243,66 @@ def successors(state):
     Determine which objects can be acted upon and perform a single movement action on each.
     Returns a dict of state: action where state is a tuple of tuples of objects and locations
     and an action is a tuple of object and total distance moved.
+
+    An action is what? Moving a piece as far as possible? Assume that action means moving the piece until it cannot be moved.
     """
 
-    pass
+    # a state is a tuple made up of tuples, primarily moveable pieces.
+    possibilities = {}
+    for piece in state:
+        symbol, loc = piece
+        if symbol in ['@', '|']:
+            continue
+        # move the piece as much as possible in either possible direction
+        # if state is not equal to current state, add to the possibilities map
+        orientation = find_orientation_for_piece(piece)
+        for direction in range(-1, 2, 2):
+            _state, _piece, _action = move(state, piece, direction * orientation)
+            _state = update_state(state, _piece)
+            if _action != 0:
+                possibilities[_state] = (symbol, _action)
+    return possibilities
+
+def find_orientation_for_piece(piece):
+    symbol, locations = piece
+    return locations[1] - locations[0]
+
+def move(state, piece, direction):
+    symbol, locations = piece
+    # move the piece by updating the locations
+    good_locations = locations
+    action = 0
+    while True:
+        new_locations = tuple(l + direction for l in good_locations)
+        if is_valid(state, symbol, new_locations):
+            good_locations = new_locations
+            action += direction
+        else:
+            break
+    return state, (symbol, good_locations), action
+
+def update_state(state, new_piece_location):
+    symbol, locations = new_piece_location
+    state = list(state)
+    for piece in state:
+        _symbol, _locations = piece
+        if _symbol == symbol:
+            state.remove(piece)
+            break
+    state.append(new_piece_location)
+    return tuple(sorted(state))
+
+def is_valid(state, symbol, new_locations):
+    for _symbol, _locations in state:
+        if _symbol != symbol:
+            if set(_locations) & set(new_locations):
+                return _symbol == '@' and symbol == '*' and 32 not in new_locations
+    return True
 
 ## Testing and Solving ##
+
 show(puzzle1)
+show(puzzle2)
+show(puzzle3)
+
+solve_parking_puzzle(puzzle1)
