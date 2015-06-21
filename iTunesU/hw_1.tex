@@ -1,0 +1,76 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\usepackage{amsmath}				% use amsmath
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{Stats 110 Strategic Practice and Homework 1}
+\author{Daniel Flannery}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{Naive Definition of Probability}					% Lecture 1 notes
+	\begin{enumerate}
+		\item 
+			\begin{enumerate}
+			\item The probability of rolling 21  with 4 fair dice is $>$ The probability of rolling 22 with for 4 fair dice.\\\\
+			4 fair dice have a sum in the range $[4, 24]$ with $6^4 = 1296$ combinations.
+			A 21 can be constructed from the partitioned into $(6, 6, 6, 3), (6, 6, 5, 4), (6, 5, 5, 5)$; while 22 can partitioned into $(6, 6, 6, 4), (6, 6, 5, 5)$
+			For example, for $(6, 6, 6, 3)$ there are $4$ possibilities: 4 dice, choose one to be 3, the rest are 6.
+			For example, for $(6, 6, 5, 4)$ there are $\frac{4!}{2!} = 12$ possibilities because there are 4 dice, you must choose one to be 5, one to be 4, and the rest to be 6. Divide by $2!$ to account for the possible orderings of 6 due to repetition.
+			For example, for $(6, 6, 5, 5)$ there are $\frac{4!}{2! 2!} = 6$ possibilities because there are two possible values and order does not matter.
+			Therefore, there are $4 + 4 + 12 = 20$ ways to get 22.
+			Therefore, there are $4 + 6 = 10$ ways to get 21.
+			\item The probability of a random 2 letter word being a palindrome $=$ The probability of a random 3 letter word being a palindrome.\\\\
+			For a two letter random word, there are $26^2$ outcomes. A two letter word is a palindrome when both letters are the same, so there are 26 palindrome and the probability is $\frac{26}{26^2}$.
+			For a three letter random word, there are $26^3$ outcomes. A three letter word is a palindrome when the first and third letter are the same, so there are 26 letters, then for each combination, the second letter can be any of the 26 letters.
+			Then by the multiplication rule, there are $26 * 26$ palindrome and the probability is $\frac{26^2}{26^3}$
+			\[ P(2 \hspace{2mm} letter \hspace{2mm} palindrome) = P(3 \hspace{2mm} letter \hspace{2mm} palindrome) = \frac{26}{26^2} = \frac{26^2}{26^3} \]
+			A three letter palindrome is an expansion of a two letter palindrome.
+			\end{enumerate}
+		\item Random 5 card poker hand from a standard deck
+			\begin{enumerate}
+				\item A flush (all 5 cards of same suit, excluding royal flush) \\\\
+					There are 4 suits. For each suit there are 13 cards. There $\binom{13}{5}$ ways to choose a 5 card hand for each suit. 1 hand is excluded, the royal flush.\\
+					The probability is: \[ \frac{(\# suits * ( allowable \hspace{2mm} hands )}{all \hspace{2mm} possible \hspace{2mm} hands} \]
+					\[ \frac{4 (\binom{13}{5} - 1)}{\binom{52}{5}} \]
+				\item Two pair \\\\
+					Choose 2 ranks of 13 possible. Choose 2 of the 4 possible cards for each rank. Choose 1 of the remaining cards that is not of the 2 selected ranks. Divide by all possible hands.
+					\[ \frac{\binom{13}{2} \cdot \binom{4}{2} \cdot \binom{4}{2} \cdot 44}{\binom{52}{5}} \]
+			\end{enumerate}
+		\item Paths on a grid from $(0, 0)$ to $(110, 111$) where the only moves are one unit up or one unit down.
+			\begin{enumerate}
+				\item Encode the moves as such: \textit{U} for up and \textit{R} for right. There are $110 - 0$ \textit{U}'s and $111 - 0$ \textit{R}'s. Therefore the set of moves can be written as: \textit{URURURRRR...UR}. There are then $110 + 111 = 221$ symbols to be
+				positioned. To determine the number of paths choose a symbol to position: \[ \binom{221}{110} = \binom{221}{111} \]
+				\item Paths from $(0, 0)$ to $(210, 211)$ that go through $(110, 111)$ \\\\
+				From above there are $\binom{221}{110}$ paths from $(0, 0)$ to $(110, 111)$. Now merely need to find the number of paths from $(110, 111)$ to $(210, 211)$. This is then $210 - 110 = 100$ more \textit{R}'s and $211 - 111 = 100$ more \textit{U}'s.
+				Therefore $\binom{200}{100}$ paths. By the multiplication rule then there are \[ \binom{221}{110} \cdot \binom{200}{100} \] total paths.
+			\end{enumerate}
+		\item A \textit{no-repeat-word} is a sequence of 26 letters unique and with no repetition. Show that the probability that a \textit{no-repeat-word} using all 26 letters selected at random with all \textit{no-repeat-word}  equally likely is very close to $1/e$. \\\\
+			There are $26!$ total \textit{no-repeat-words} of length 26. To create a \textit{no-repeat-word} of length $k$, first select $k$ letters from the 26. $\binom{26}{k}$. Then those letters can be arranged into $k!$ words. Therefore there are $\binom{26}{k}k!$
+			\textit{no-repeat-words} with $k$ letters. To count all possible \textit{no-repeat-words}, simply sum all the possible words of each possible length: $[1, 26]$. Then, the probability of a \textit{no-repeat-word} having all 26 letters is:
+			\[ 
+				= \frac{26!}{\sum_{k=1}^{26} \binom{26}{k} k!} = \frac{26!}{\sum_{k=1}{26} \frac{26!}{k!(26-k)} k!}
+			\]
+			\[
+				= \frac{26!}{26! \cdot \sum_{k=1}^{26} \frac{k!}{k!(26-k)!} } = \frac{1}{\sum_{k=1}^{26} \frac{1}{(26-k)!}}
+			\]
+			\[
+				= \frac{1}{ \frac{1}{25!} + \frac{1}{24!} + \cdots + \frac{1}{1!} + 1} = 1 + \frac{1}{1!} + \frac{1}{2!} + \cdots + \frac{1}{25!}
+			\]
+			which is equivalent to the Taylor series $e^x = 1 + x + \frac{x^2}{2!} + \cdots + \frac{x^{25}}{25!}$ evaluated at $x=1$.
+	\end{enumerate}
+
+\section{Story Proofs}
+
+\end{document}  
