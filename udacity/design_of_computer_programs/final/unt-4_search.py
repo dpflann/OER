@@ -165,6 +165,7 @@ def show(state, N=N):
     "Print a representation of a state as an NxN grid."
     # Initialize and fill in the board.
     board = ['.'] * N**2
+    state = sorted(state, reverse=True)
     for (c, squares) in state:
         for s in squares:
             board[s] = c
