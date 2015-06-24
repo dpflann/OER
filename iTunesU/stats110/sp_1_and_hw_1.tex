@@ -15,6 +15,7 @@
 	urlcolor=red,
 	linktoc=all
 }
+\usepackage[makeroom]{cancel}
 
 %SetFonts
 
@@ -85,6 +86,33 @@
 	\end{enumerate}
 
 \subsection{Story Proofs}
+	\begin{enumerate}
+		\item Story Proof for: $\sum_{k=0}^{n} \binom{n}{k} = 2^{n}$. This represents choosing 0 to $n$ from a set of $n$ objects, you are creating all possible sets of combinations. One way to visualize this is as $n$ slots for each object. Then you can specify that an object is contained in a set if it is given a value of 1 and excluded if given a value of 0. Then you are merely creating binary numbers from $0,0,0,0,...,0$ (n $0$'s) to $1,1,1,1,...,1$ (n $1$'s). There are then $2^{n}$ combinations.
+		\item Story Proof for:
+			\[
+				\frac{(2n)!}{2^{n} \cdot n!} = (2n - 1)(2n - 3) \cdots 3 \cdot 1.
+			\]
+			\[
+				= \frac{(2n)!}{2^{n} \cdot n!}
+			\]
+			\[
+				= \frac{(2n)(2n-1)(2n-3)(2n-4)(2n-5) \cdots (3)(2)(1)}{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}
+			\]
+			\[
+				= \frac{(2n)(2n-2)(2n-4)  \cdots (2) \cdots (2n-1)(2n-3) \cdots (3)(1)}{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}
+			\]
+			\[
+				= \frac{2^{n} \cdot (2(n-1))(2(n-2)) \cdots (2 \cdot 1) \cdot (2n-1)(2n-3)(2n-5) \cdots (3)(1)}{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}
+			\]
+			\vspace{4mm}
+			\[
+				= \frac{ \cancel{2^{n} \cdot (2(n-1))(2(n-2)) \cdots (2 \cdot 1)} \cdot (2n-1)(2n-3)(2n-5) \cdots (3)(1)}{\cancel{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}}
+			\]
+			\vspace{4mm}
+			\[
+				= (2n-1)(2n-3)(2n-5) \cdots (3)(1)
+			\]
+	\end{enumerate}
 
 % Homework
 \pagebreak
