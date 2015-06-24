@@ -7,6 +7,14 @@
 \usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
 								% TeX will automatically convert eps --> pdf in pdflatex		
 \usepackage{amssymb}
+\usepackage{color}
+\usepackage{hyperref}				% Allow links between table of contents and sections
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=red,
+	linktoc=all
+}
 
 %SetFonts
 
@@ -18,7 +26,10 @@
 %\date{}							% Activate to display a given date or no date
 
 \begin{document}
+
 \maketitle
+\tableofcontents
+
 % Strategic Practice
 \section{Strategic Practice}
 \subsection{Naive Definition of Probability}
