@@ -112,10 +112,42 @@
 			\[
 				= (2n-1)(2n-3)(2n-5) \cdots (3)(1)
 			\]
+		\item Story Proof for:
+			\[
+				\binom{n}{k} + \binom{n}{k-1} = \binom{n + 1}{k}
+			\]
+			This represents the scenario where you have $n + 1$ people, where $n$ are members of the club, and 1 is the president. How many ways then are there to select a group of size $k$? You can decide to select $k$ people from the $n$, without the president. This would represent groups of size $k$ from $n$ excluding the president. You can decide to select first the president, then the remaining $k-1$ people to form a group of $k$ people form $n$. The number of groups of size $k$ from $n+1$ people where one is labeled, is the number of groups of size $k$ that exclude the labeled person $+$ the number of groups of size $k-1$ that include the labeled person.
+			\[
+				\binom{n}{k} + \binom{n}{k-1} = \frac{n!}{k!(n-k)!} + \frac{n!}{(k-1)!(n-k+1)!}
+			\]
+			\[
+				= \frac{n![(n-k+1)!(k-1)! + (n-k)!k!]}{(n-k)!k!(n-k+1)!(k-1)!}
+			\]
+			\[
+				= \frac{n![(n-k+1)(n-k)!(k-1)! + (n-k)!k(k-1)!]}{(n-k)!k!(n-k+1)!(k-1)!}
+			\]
+			\[
+				= \frac{n!(n-k)!(k-1)![(n-k+1) + k]}{(n-k)!k!(n-k+1)!(k-1)!}
+			\]
+			\[
+				= \frac{n! \cancel{(n-k)!(k-1)!}[(n-k+1) + k]}{ \cancel{(n-k)!(k-1)!}k!(n-k+1)!}
+			\]
+			\[
+				= \frac{n!(n+1)}{k!(n-k+1)!}
+			\]
+			\[
+				= \frac{(n+1)!}{k!(n+1-k)!}
+			\]
+			\[
+				= \binom{n+1}{k}
+			\]
 	\end{enumerate}
+	
 
 % Homework
 \pagebreak
 \section{Homework}
-
+	\begin{enumerate}
+		\item 6 Children, 3 boys and 3 girls.
+	\end{enumerate}
 \end{document}  
