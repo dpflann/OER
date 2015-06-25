@@ -50,9 +50,22 @@
 
 def nfsmtrim(edges, accepting): 
     # Write your code here.
-    routes = {e: nfsmaccepts(e, edges, accepting, []) for e, l in edges}
-    print(routes)
-    return
+    states = set([])
+    for e in edges:
+        _e, l = e
+        states.add(_e)
+        states |= set(edges[e])
+    live_states = {s for s in states if nfsmaccepts(s, edges, accepting, []) != None}
+    new_edges = {}
+    for e in edges:
+        s, l = e
+        new_destinations = None
+        if s in live_states:
+            new_destinations = [destination for destination in edges[e] if destination in live_states]
+        if new_destinations:
+            new_edges[e] = new_destinations
+    new_accepting = [s for s in accepting if s in live_states]
+    return new_edges, new_accepting
 
 def nfsmaccepts(current, edges, accepting, visited):
     # base case
