@@ -50,8 +50,26 @@
 
 def nfsmtrim(edges, accepting): 
     # Write your code here.
+    routes = {e: nfsmaccepts(e, edges, accepting, []) for e, l in edges}
+    print(routes)
     return
 
+def nfsmaccepts(current, edges, accepting, visited):
+    # base case
+    visited.append(current)
+    if current in accepting:
+        return ''
+    s = None
+    for state, letter in edges:
+        if current == state:
+            # Determine nodes to visit
+            next_states = edges.get((state, letter))
+            for next_state in next_states:
+                if next_state not in visited:
+                    next_letter = nfsmaccepts(next_state, edges, accepting, visited)
+                    if next_letter is not None:
+                        s = letter + next_letter
+    return s
 
 
 # We have included a few test cases, but you will definitely want to make
