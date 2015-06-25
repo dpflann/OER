@@ -148,6 +148,43 @@
 \pagebreak
 \section{Homework}
 	\begin{enumerate}
-		\item 6 Children, 3 boys and 3 girls.
+		\item 6 Children, 3 boys and 3 girls. There are $6!$ permutations. For the permutations of consideration, the first 3 must be girls, and the last 3 must be boys. There are $3!$ orderings for the girls and $3!$ orderings for the boys. The probability that the 3 eldest are girls is $\frac{(3!)(3!)}{6!}$
+		\item
+			\begin{enumerate}
+				\item Splitting 12 people into 3 teams: 2 of size 5 and 1 of size 2. Divide by $2!$ because there are 2 teams of 5 and order does not matter.
+					\[
+						= \binom{12}{2} \cdot \binom{10}{5} / 2
+					\]
+					\[
+						= \frac{12!}{2! \cdot 5! \cdot 5! \cdot 2}
+					\]
+				\item Splitting 12 people into 3 teams of size 4. Divide by $3!$ because there are 3 teams and order does not matter.
+					\[
+						= \binom{12}{4} \cdot \binom{8}{4} \cdot \binom{4}{4} / 3!
+					\]
+					\[
+						= \frac{12!}{4! \cdot 4! \cdot 4! \cdot 3!}
+					\]			
+			\end{enumerate}
+		\item Probability of conflict. Each of the 10 times slots has the same probability of selection. The probability of a conflict is $1 - P(conflict^{c})$. What is the probability of no conflict?
+			\[
+				= \frac{10 \cdot 9 \cdot 8}{10 \cdot 10 \cdot 10}
+			\]
+			Then the probability of conflict is 1 minus that.
+			\[
+			P(conflict) = 1 - P(conflict^{c})	
+			\]
+			\[
+				= 1 - \frac{10 \cdot 9 \cdot 8}{10 \cdot 10 \cdot 10}
+			\]
+		\item Probability of 1 of 6 districts having more than of the 6 robberies.
+			The probability of no districts having more than 1 robbery is:
+			\[
+				P(at \hspace{2mm} most \hspace{2mm} one) = \frac{6!}{6^{6}}
+			\]
+			The probability of districts having more than 1 robbery is $1 - P(at \hspace{2mm} most \hspace{2mm} one)$.
+			\[
+				P(some \hspace{2mm} with \hspace{2mm} more \hspace{2mm} than \hspace{2mm} one) = 1 - \frac{6!}{6^{6}}
+			\]
 	\end{enumerate}
 \end{document}  
