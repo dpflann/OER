@@ -42,7 +42,7 @@ a solution that way.  If not, try T19 first, and so on. At first I thought
 I would need three passes: first try to solve with one dart, then with two,
 then with three.  But I realized that if we include 0 as a possible dart
 value, and always try the 0 first, then we get the effect of having three
-passes, but we only have to code one pass.  So I creted ordered_points as
+passes, but we only have to code one pass.  So I created ordered_points as
 a list of all possible scores that a single dart can achieve, with 0 first,
 and then descending: [0, 60, 57, ..., 1].  I iterate dart1 and dart2 over
 that; then dart3 must be whatever is left over to add up to total.  If
@@ -59,7 +59,77 @@ def double_out(total):
     """Return a shortest possible list of targets that add to total,
     where the length <= 3 and the final element is a double.
     If there is no solution, return None."""
-    # your code here
+
+    # obtain all outcomes
+    total_outcomes = set([25, 50])  # include 0 and bulls-eye
+    doubles = set([50])
+    for i in range(1, 21):
+        total_outcomes |= {i, i * 2, i * 3}
+        doubles |= {i * 2}
+    total_outcomes = [0] + sorted(total_outcomes, reverse=True)
+    # create acceptable groups that sum to the total
+    groups = []
+    darts_1_and_2 = [(i, j, i + j) for i in total_outcomes for j in total_outcomes]
+    for combo in darts_1_and_2:
+        d_1, d_2, _1_and_2 = combo
+        d_3 = total - _1_and_2
+        # filter those that do not end on a double
+        if d_3 in doubles:
+            groups.append((d_1, d_2, d_3))
+    # convert the list to alphanumeric representation
+    names = [rename(g) for g in groups]
+    # select the shortest list
+    option = min(names, key=len) if names else None
+    return option
+
+
+def rename(g):
+    """Rename a group of darts from numbers to strings.
+
+    60 --> T20 for triple 20.
+    """
+
+    return [name(d, i) for i, d in enumerate(g, start=1) if d != 0]
+
+
+def name(n, i):
+    """Rename a number to a string. Select the 'easiest' target is there are many options.
+
+    60 --> T2 for triple 20
+    S > T > D
+    """
+
+    names = {0: [''], 25: ['SB'], 50: ['DB']}
+    for _ in range(1, 21):
+        s, d, t = _, _ * 2, _ * 3
+        _s = str(_)
+        if s not in names:
+            names[s] = ['S' + _s]
+        else:
+            names[s] += ['S' + _s]
+        if d not in names:
+            names[d] = ['D' + _s]
+        else:
+            names[d] += ['D' + _s]
+        if t not in names:
+            names[t] = ['T' + _s]
+        else:
+            names[t] += ['T' + _s]
+    options = names[n]
+    if i == 3:
+        # select a double
+        option = [o for o in options if 'D' in o]
+    else:
+        # select the easiest
+        option = [o for o in options if 'S' in o]
+        if not option:
+            option = [o for o in options if 'T' in o]
+        if not option:
+            option = [o for o in options if 'D' in o]
+    return option[0]
+
+### TEST double_out(n)
+test_darts()
 
 """
 It is easy enough to say "170 points? Easy! Just hit T20, T20, DB."
