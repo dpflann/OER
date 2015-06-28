@@ -1,0 +1,10 @@
+- Context-free grammar
+- A language L is a context-free language if there exists a context-free grammar G such that the set of strings accepted by G is exactly L. Context-free languages are strictly more powerful than regular languages. (i.e., context-free grammars are strictly more powerful than regular expressions.)
+- regular expressions and context-free grammars, regular expressions can be too limited compared to CFGs.
+- parse trees are a pictoral representation of the structure of an utterance. A parse tree demonstrates that a string is in the language of a grammar.
+- ambiguity can exist in programming language statements
+- parentheses can control ambiguity
+- generators: yield
+- slow way to encode grammar rules and enumerate strings
+- next: more efficient way to encode grammar rules and check for validity
+
