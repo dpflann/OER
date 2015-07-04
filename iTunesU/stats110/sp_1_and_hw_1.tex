@@ -16,6 +16,7 @@
 	linktoc=all
 }
 \usepackage[makeroom]{cancel}
+\usepackage{qtree}
 
 %SetFonts
 
@@ -186,5 +187,73 @@
 			\[
 				P(some \hspace{2mm} with \hspace{2mm} more \hspace{2mm} than \hspace{2mm} one) = 1 - \frac{6!}{6^{6}}
 			\]
+		\item Capture-Recapture. Select simple random sample of size $n$ elk from population of size $N$: all $\binom{N}{n}$ sets of $n$ elk are equally likely. When recapturing $m$ elk, what is the probability that $k$ of the $m$ elk were previously tagged?
+			\[
+				\binom{N}{m} \rightarrow \binom{N-n}{m-k}, \binom{n}{k}
+			\]
+			\[
+				\frac{\binom{n}{k} \cdot \binom{N-n}{m-k}}{\binom{N}{m}}
+			\]
+		\item A jar contains $r$ red balls and $g$ green balls. A ball is drawn randomly, then a second ball is drawn randomly
+			\begin{enumerate}
+				\item Why would the probability of the second ball being green intuitively be the same as the first ball being green? There are $g + r$ balls. The first ball can be any of these, and the second ball can be any of these. There is no property
+					that actual dictates the likelihood of a ball being chosen first or second. Imagine if both balls were selected at the same time, the probabilities of simultaneous selection should be the same.
+				\item Sample space:
+					\Tree  [.Select [.$P(r)=\frac{r}{r+g}$ [.$P(r)=\frac{r-1}{r-1+g}$ ] [.$P(g)=\frac{g}{r-1+g}$ ] ] [.$P(g)=\frac{g}{r+g}$ [.$P(r)=\frac{g}{r+g-1}$ ] [.$P(g)=\frac{g-1}{r+g-1}$ ] ]  ]
+					The probability that the $i^{th}$ ball is green is:
+					\[
+						P(g_i) = \frac{g \cdot (g + r - 1)}{(g + r)(g + r -1)} = \frac{g}{g + r}
+					\]
+					for $ i \in {1, 2}$
+				\item Suppose there are 16 balls in total, probability that the two balls are the same color is the same as the probability that they are different colors. What are $r$ and $g$? What is the probability of getting one of each ball?
+					\[
+						A = (G_1 \cap G_2^c) \cup (G_1^c \cap G_2)
+					\]
+					\[
+						P(A) = P(A^c), P(A)=1/2
+					\]
+					\[
+						P(A) = \frac{2gr}{(g+r)(g+r-1)} = \frac{1}{2}
+					\]
+					\[
+						(g+r)(g+r-1) = 4gr
+					\]
+					\[
+						= (g+r)(g+r-1)-4gr = 0
+					\]
+					\[
+						= g^2 + gr - g +rg +r^2 -r - 4gr = 0
+					\]
+					\[
+						= g^2 + r^2 - 4gr + 2gr -g - r = 0
+					\]
+					\[
+						= g^2 + r^2 - 2gr - g - r = 0
+					\]
+					\[
+						= (g - r)^2 = g + r
+					\]
+					$g + r = 16$, $g - r = $ $4$ or $-4$. $g=10$, $r=6$, or $g=6$, $r=10$
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item Story proof:
+					\[
+						\binom{k}{k} + \binom{k+1}{k} + \binom{k+2}{k} + \cdots + \binom{n}{k} = \binom{n+1}{k+1}
+					\]
+					$n$, $k$; $n \geq k > 0$
+					\[
+						\sum_{j=k}^{n} \binom{j}{k} = \binom{n+1}{k+1}
+					\]
+				\item  Story proof: 5 flavors of gummi bears, in packages of size $[30, 50]$. How many possibilities are there for the composition of a pack of gummi bears?
+					For $i$ gummi bears with $5$ possible flavors, there are then $\binom{(\# \hspace{2mm} flavors) - (\# \hspace{2mm} total \hspace{2mm} bears) - 1}{\# \hspace{2mm} total \hspace{2mm} bears)}$
+					\[
+						\binom{5 + i - 1}{i} = \binom{i + 4}{i} = \binom{i+4}{4}
+					\]
+					Now, $i \in [30, 50]$, therefore the number of possibilities is:
+					\[
+						\sum_{i=30}^{50} \binom{i+4}{i} = \sum_{j=34}^{50} \binom{j}{4}
+					\]
+			\end{enumerate}
 	\end{enumerate}
 \end{document}  
