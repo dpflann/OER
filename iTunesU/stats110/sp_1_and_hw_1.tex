@@ -74,7 +74,7 @@
 			There are $26!$ total \textit{no-repeat-words} of length 26. To create a \textit{no-repeat-word} of length $k$, first select $k$ letters from the 26. $\binom{26}{k}$. Then those letters can be arranged into $k!$ words. Therefore there are $\binom{26}{k}k!$
 			\textit{no-repeat-words} with $k$ letters. To count all possible \textit{no-repeat-words}, simply sum all the possible words of each possible length: $[1, 26]$. Then, the probability of a \textit{no-repeat-word} having all 26 letters is:
 			\[ 
-				= \frac{26!}{\sum_{k=1}^{26} \binom{26}{k} k!} = \frac{26!}{\sum_{k=1}{26} \frac{26!}{k!(26-k)} k!}
+				= \frac{26!}{\sum_{k=1}^{26} \binom{26}{k} k!} = \frac{26!}{\sum_{k=1}^{26} \frac{26!}{k!(26-k)} k!}
 			\]
 			\[
 				= \frac{26!}{26! \cdot \sum_{k=1}^{26} \frac{k!}{k!(26-k)!} } = \frac{1}{\sum_{k=1}^{26} \frac{1}{(26-k)!}}
@@ -102,11 +102,11 @@
 				= \frac{(2n)(2n-2)(2n-4)  \cdots (2) \cdots (2n-1)(2n-3) \cdots (3)(1)}{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}
 			\]
 			\[
-				= \frac{2^{n} \cdot (2(n-1))(2(n-2)) \cdots (2 \cdot 1) \cdot (2n-1)(2n-3)(2n-5) \cdots (3)(1)}{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}
+				= \frac{(2(n))(2(n-1))(2(n-2)) \cdots (2 \cdot 1) \cdot (2n-1)(2n-3)(2n-5) \cdots (3)(1)}{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}
 			\]
 			\vspace{4mm}
 			\[
-				= \frac{ \cancel{2^{n} \cdot (2(n-1))(2(n-2)) \cdots (2 \cdot 1)} \cdot (2n-1)(2n-3)(2n-5) \cdots (3)(1)}{\cancel{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}}
+				= \frac{ \cancel{2^{n} \cdot (n)((n-1))((n-2)) \cdots (1)} \cdot (2n-1)(2n-3)(2n-5) \cdots (3)(1)}{\cancel{2^{n} \cdot (n)(n-1)(n-2)(n-3) \cdots (3)(2)(1)}}
 			\]
 			\vspace{4mm}
 			\[
@@ -116,7 +116,7 @@
 			\[
 				\binom{n}{k} + \binom{n}{k-1} = \binom{n + 1}{k}
 			\]
-			This represents the scenario where you have $n + 1$ people, where $n$ are members of the club, and 1 is the president. How many ways then are there to select a group of size $k$? You can decide to select $k$ people from the $n$, without the president. This would represent groups of size $k$ from $n$ excluding the president. You can decide to select first the president, then the remaining $k-1$ people to form a group of $k$ people form $n$. The number of groups of size $k$ from $n+1$ people where one is labeled, is the number of groups of size $k$ that exclude the labeled person $+$ the number of groups of size $k-1$ that include the labeled person.
+			This represents the scenario where you have $n + 1$ people, where $n$ are members of the club, and 1 is the president. How many ways then are there to select a group of size $k$? You can decide to select $k$ people from the $n$, without the president. This would represent groups of size $k$ from $n$ excluding the president. You can decide to select first the president, then the remaining $k-1$ people to form a group of $k$ people from $n$. The number of groups of size $k$ from $n+1$ people where one is labeled, is the number of groups of size $k$ that exclude the labeled person $+$ the number of groups of size $k-1$ that include the labeled person.
 			\[
 				\binom{n}{k} + \binom{n}{k-1} = \frac{n!}{k!(n-k)!} + \frac{n!}{(k-1)!(n-k+1)!}
 			\]
