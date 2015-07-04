@@ -104,7 +104,7 @@
 \section{Lecture 3: Birthday Problem, Properties Probability}
 	\subsection{Notes}
 	\begin{itemize}
-		\item Birthday Problem: k people, find the probability that 2 have the same birthday. Exclude February 29, assume other 365 days are equally likely.
+		\item \textbf{Birthday Problem}: k people, find the probability that 2 have the same birthday. Exclude February 29, assume other 365 days are equally likely.
 			If $k > 365$, the probability is 1 by the pigeonhole principle.
 			If $k \leq 365$, the probability of no match:
 				\[
@@ -115,12 +115,12 @@
 					P(M) = 1 - P(M^c) = 1 - \frac{365 \cdot 364 \cdot 363 \cdots (365 - k + 1)}{365^k}
 				\]
 			Imagine pairing up the people. There are $\binom{k}{2}$ pairs.
-		\item Axioms:
+		\item \textbf{Axioms}:
 			\begin{enumerate}
 				\item $P(\emptyset) = 0$, $P(S) = 1$
 				\item $P( \cup_{n=1}^{\infty} = \sum_{n=1}{^\infty}P(A_n)$ if $A_i$ are disjoint.
 			\end{enumerate}
-		\item Properties:
+		\item \textbf{Properties}:
 			\begin{enumerate}
 				\item $P(A^c) = 1 - P(A)$ Proof: $1 = P(S) = P(A \cup A^c) = P(A) + P(A^c)$ because $A \cap A^c = \emptyset$
 				\item If $ A \subseteq B$, then $P(A) \leq P(B)$. Proof: $B = A \cup (B \cap A^c)$, disjoint, then $P(B) = P(A) + P(B \cap A^c) \geq P(A)$
@@ -130,7 +130,7 @@
 					\]
 					$A \cap B$ and $A^c \cap B$ are disjoint and the union is B
 			\end{enumerate}
-		\item Inclusion-Exclusion: Expanding upon most recent item. Example with 3 sets: A, B, C.
+		\item \textbf{Inclusion-Exclusion}: Expanding upon most recent item. Example with 3 sets: A, B, C.
 			\[
 				P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)
 			\]
@@ -139,9 +139,9 @@
 				P(A_1 \cup A_2 \cup \cdots \cup A_n)
 			\]
 			\[
-				= \sum{j=1}^{n}P(A_j) - \sum{i < j}P(A_i \cap A_j) + \sum_{i < j < k}P(A_i \cap A_j \cap A_k) + \cdots + (-1)^{n+1}P(A_1 \cap \cdots \cap A_n)
+				= \sum_{j=1}^{n}P(A_j) - \sum_{i < j}P(A_i \cap A_j) + \sum_{i < j < k}P(A_i \cap A_j \cap A_k) + \cdots + (-1)^{n+1}P(A_1 \cap \cdots \cap A_n)
 			\]
-		\item de Montmort's Matching Problem (\href{http://www.math.uah.edu/stat/urn/Matching.html}{link}).
+		\item \textbf{de Montmort's Matching Problem} (\href{http://www.math.uah.edu/stat/urn/Matching.html}{link}).
 			What is the probability that the $j^{th}$ card of $n$ shuffled cards has the label $j$?
 			\[
 				= 1 - 1/e
