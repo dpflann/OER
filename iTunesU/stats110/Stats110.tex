@@ -36,20 +36,20 @@
 		\item A \textbf{Sample Space} is the set of all possible outcomes of an experiment
 		\item An \textbf{event} is a subset of the sample space.
 		\item \textbf{Naive Definition of Probability}: \[P(A) = \frac{\# \hspace{2mm} of \hspace{2mm} favorable \hspace{2mm} outcomes}{\# \hspace{2mm} possible \hspace{2mm} outcomes}\]
-		\item \textbf{The Multiplication Rule} - if you have experiment with $n$ possible outcomes, and for each outcome of the first experiment there 		are $n$ outcomes for the second experiments, ..., for each $r^{th}$ experiment there are $n_{r}$ outcomes, then there are $n_{1}*n_{2}*...*n_{r}$ overall possible outcomes.
+		\item \textbf{The Multiplication Rule} - if you have experiment with $n$ possible outcomes, and for each outcome of the first experiment there 		are $n$ outcomes for the second experiments, ..., for each $r^{th}$ experiment there are $n_{r}$ outcomes, then there are $n_{1} \cdot n_{2} \cdots n_{r}$ overall possible outcomes.
 		Assumes all outcomes are equally likely within a finite sample space
 		\item \textbf{Binomial Coefficient}: \[ \binom{n}{k} = \frac{n!}{(n-k)!k!} \] $0$ if $k > n$\\
 		\\
 		How do you get there?
-		Number of subsets of size $k$ of group $n$. Choosing $k$ from $n$ in order: $n*(n-1)(n-2)*...*(n-k+1)$
-		Now if order does not matter: $\frac{n*(n-1)(n-2)*...*(n-k+1)}{k!}$
+		Number of subsets of size $k$ of group $n$. Choosing $k$ from $n$ in order: $n \cdot (n-1)(n-2) \cdot ... \cdot (n-k+1)$
+		Now if order does not matter: $\frac{n \cdot (n-1)(n-2) \cdot ... \cdot (n-k+1)}{k!}$
 		Now through canceling we reach the formula for the binomial coefficient.
 		\end{itemize}
 	\subsection{Example: Full House, 5 Card Hand}
 		\paragraph{}
 			There are 13 suits. We must choose one suit then 3 of the 4 possible cards. Then we must choose another suit of the remaining 12, then select 2 of the 4 possible cards. Then divide by the sample space which is all possible 5 card hands from a deck of 52 cards.
 		\begin{center}
-			\[ \frac{13\binom{4}{3} * 12\binom{4}{2}}{\binom{52}{5}} \]
+			\[ \frac{13\binom{4}{3}  \cdot  12\binom{4}{2}}{\binom{52}{5}} \]
 		\end{center}
 	\subsection{Sampling Table}
 	% Begin Table for fundamental 
@@ -63,7 +63,7 @@
  		&&\\
 		\textbf{Replace}	&$n^k$ 	&$\binom{n+k-1}{k}$\\
 		&&\\
-		\textbf{Don't Replace} 	&$n(n-1)(n-2)...(n-k+1)$ 	& $\binom{n}{k}$\\
+		\textbf{Don't Replace} 	&$n(n-1)(n-2) \cdots (n-k+1)$ 	& $\binom{n}{k}$\\
 		&&\\
  		\hline
 		\end{tabular}
@@ -108,7 +108,7 @@
 			If $k > 365$, the probability is 1 by the pigeonhole principle.
 			If $k \leq 365$, the probability of no match:
 				\[
-					P(M^c)= \frac{365 \cdot 364 million\cdot 363 \cdots (365 - k + 1)}{365^k}
+					P(M^c)= \frac{365 \cdot 364 \cdot 363 \cdots (365 - k + 1)}{365^k}
 				\]
 			The probability of a match is: $1 - P(M^c)$
 				\[
