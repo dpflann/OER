@@ -58,15 +58,45 @@
 			there are now 3 seasons to choose from. And so on for 2 seasons not occurring, and so on for 3 seasons not occurring. Each time you are making the event less probable by shrinking the number of options.
 		\item Picking Classes Randomly
 			\begin{enumerate}
-				\item Naive: There are 7 classes to take total, there are 30 total classes, 6 each day of the week. 7 classes can be taken either with 2 days with 2 classes and 3 days with 1 or 1 day with 3 classes and 4 days with 1:
+				\item Naive Method: There are 7 classes to take total, there are 30 total classes, 6 each day of the week. 7 classes can be taken either with 2 days with 2 classes and 3 days with 1 or 1 day with 3 classes and 4 days with 1:
 					(2, 2, 1, 1, 1) or (3, 1, 1, 1, 1). First select the days of the week that will have more than one course, then for those days select the required number out of the 6 possible classes, then for the remaining days, select
 					1 of the possible 6 classes.
 					\[
 						\frac{\binom{5}{2}\binom{6}{2}\binom{6}{2}\binom{6}{1}\binom{6}{1}\binom{6}{1} + \binom{5}{1}\binom{6}{3}\binom{6}{1}\binom{6}{1}\binom{6}{1}\binom{6}{1}}{\binom{30}{7}}
 					\]
-				\item Inclusion-Exclusion:
+				\item Inclusion-Exclusion Method: To find the probability of classes on each day of the week, consider the complement, that is the probability that at least one day does not have classes.
+					To take 7 classes total, there must be at least 2 days with classes because of the constraint that each day has 6 classes. Let $B_i = A_{i}^{c}$, where $A_i$ is the probability of class on that day.
+					\[
+						P(atLeastOneDayWithNoClass) = 
+					\]
+					\[
+						\sum_{i}P(NoClassOnDay A_i)
+					\]
+					\[
+						- \sum_{i<j}P(NoClassOnDay A_i and A_j)
+					\]
+					\[
+						+ \sum_{i<j<k}P(NoClassOnDay A_i and A_j and A_k)
+					\]
+					There must be two days with classes, therefore there is no need to consider no classes on 4 days and no classes on 5 days.
+					\[
+						P(B_1 \cup B_2 \cup \cdots \cup B_5) = \sum_{i}P(B_i) - \sum_{i<j}P(B_i \cap B_j) + \sum_{i<j<k}P(B_i \cap B_j \cap Back_k)
+					\]
+					Now, to fill in the probabilities:
+					\[
+						P(B_1) = \frac{\binom{24}{7}}{\binom{30}{7}}, P(B_1 \cap B_2) = \frac{\binom{18}{7}}{\binom{30}{7}}, P(B_1 \cap B_2 \cap B_3) = \frac{\binom{12}{7}}{\binom{30}{7}}
+					\]
+					Other intersections are similar.
+					\[
+						P(B_1 \cup B_2 \cup \cdots \cup B_5)  = 5 \frac{\binom{24}{7}}{\binom{30}{7}} - \binom{5}{2} \frac{\binom{18}{7}}{\binom{30}{7}} + \binom{5}{3} \frac{\binom{12}{7}}{\binom{30}{7}}
+					\]
+					Therefore:
+					\[
+						P(A_1 \cup A_2 \cup A_3 \cup A_4 \cup A_5) = 1 - P(B_1 \cup B_2 \cup \cdots \cup B_5)  = 5 \frac{\binom{24}{7}}{\binom{30}{7}} - \binom{5}{2} \frac{\binom{18}{7}}{\binom{30}{7}} + \binom{5}{3} \frac{\binom{12}{7}}{\binom{30}{7}}
+					\]
 			\end{enumerate}
 	\end{enumerate}
+\subsection{Independence}
 % Homework
 \pagebreak
 \section{Homework}
