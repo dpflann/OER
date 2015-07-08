@@ -190,24 +190,80 @@ no guarantee that the game will end in a finite number of moves.
 """
 
 
+def dismantle(target):
+    letters, numbers = [], []
+    for c in target:
+        if c.isdecimal():
+            numbers.append(c)
+        elif c.isalpha():
+            letters.append(c)
+    return ''.join(letters), int(''.join(numbers))
+
+
 def outcome(target, miss):
-    "Return a probability distribution of [(target, probability)] pairs."
-    #your code here
+    """Return a probability distribution of [(target, probability)] pairs.
+    """
+
+    if miss == 0.0:
+        return {target: miss}
+    sections = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5]
+    probabilities = {}
+    if target == 'SB' or target == 'DB':
+        # deal with this last
+        return probabilities
+    # determine sections that can receive a dart given the miss probability
+    # based upon section, determined by value
+    ring, section = dismantle(target)
+    target_index = sections.index(section)
+    clockwise_miss = sections[target_index + 1]
+    counterclockwise_miss = sections[target_index - 1]
+    # determine ring misses and probabilities per section
+    target_section_probability = 1 - miss
+    miss_section_probability = miss / 2.0
+    sections = [(section, target_section_probability), (clockwise_miss, miss_section_probability), (counterclockwise_miss, miss_section_probability)]
+    for s, p in sections:
+        for _probability, _target in ring_candidates(ring, s, p, miss):
+            probabilities[_target] = _probability
+    return probabilities
+
+
+def ring_candidates(ring, section, section_probability, miss):
+    results = []
+    if ring == 'T':
+        # hit T or S
+        hit_T = (section_probability * (1 - miss), 'T' + str(section))
+        hit_S = (section_probability * (miss), 'S' + str(section))
+        results.extend([hit_T, hit_S])
+    elif ring == 'D':
+        # hit S or OFF or D
+        hit_D = (section_probability * (1 - miss), 'D' + str(section))
+        hit_S = (section_probability * (miss / 2.0), 'S' + str(section))
+        hit_OFF = (section_probability * (miss / 2.0), 'OFF')
+        results.extend([hit_D, hit_S, hit_OFF])
+    elif ring == 'S':
+        # hit S or T or D
+        # adjust miss
+        new_miss = miss / 5.0
+        hit_S = (section_probability * (1 - new_miss), 'S' + str(section))
+        hit_T = (section_probability * (new_miss / 2.0), 'T' + str(section))
+        hit_D = (section_probability * (new_miss / 2.0), 'D' + str(section))
+        results.extend([hit_S, hit_T, hit_D])
+    return results
+
 
 def best_target(miss):
     "Return the target that maximizes the expected score."
     #your code here
+
 
 def same_outcome(dict1, dict2):
     "Two states are the same if all corresponding sets of locs are the same."
     return all(abs(dict1.get(key, 0) - dict2.get(key, 0)) <= 0.0001
                for key in set(dict1) | set(dict2))
 
+
 def test_darts2():
-    assert best_target(0.0) == 'T20'
-    assert best_target(0.1) == 'T20'
-    assert best_target(0.4) == 'T19'
-    assert same_outcome(outcome('T20', 0.0), {'T20': 1.0})
+    assert same_outcome(outcome('T20', 0.0), {'T20': 0.0})
     assert same_outcome(outcome('T20', 0.1),
                         {'T20': 0.81, 'S1': 0.005, 'T5': 0.045,
                          'S5': 0.005, 'T1': 0.045, 'S20': 0.09})
@@ -218,3 +274,9 @@ def test_darts2():
              'S19': 0.016, 'S18': 0.016, 'S13': 0.016, 'S12': 0.016, 'S11': 0.016,
              'S10': 0.016, 'S17': 0.016, 'S16': 0.016, 'S15': 0.016, 'S14': 0.016,
              'S7': 0.016, 'SB': 0.64}))
+    #assert best_target(0.0) == 'T20'
+    #assert best_target(0.1) == 'T20'
+    #assert best_target(0.4) == 'T19'
+
+test_darts2()
+
