@@ -144,7 +144,63 @@
 		\item \textbf{de Montmort's Matching Problem} (\href{http://www.math.uah.edu/stat/urn/Matching.html}{link}).
 			What is the probability that the $j^{th}$ card of $n$ shuffled cards has the label $j$?
 			\[
-				= 1 - 1/e
+				= 1/e
 			\]
 	\end{itemize}
+\break
+% Lecture 4 notes
+\section{Lecture 4: Conditional Probability}
+	\subsection{Notes}
+		\begin{itemize}
+			\item Independence
+			\item $P(A \cap B) = P(A) \cdot P(B), P(B) > 0$
+			\item Events $A$, $B$, $C$ are independent if they are pairwise independent and completely independent:
+				\begin{itemize}
+					\item $P(A \cap B) = P(A) \cdot P(B)$ and $P(A \cap C) = P(A) \cdot P(C)$ and $P(B \cap C) = P(B) \cdot P(C)$ and $P(A \cap B \cap C) = P(A) \cdot P(B) \cdot P(C)$
+				\end{itemize}
+			\item Binomial Probability: Newton-Pepys (1693)
+				\begin{itemize}
+					\item What is more likely? At least one six when rolling 6 dice, at least 2 sixes when rolling 12 dice, or at least 3 sixes when rolling 18 dice?
+					\item For at least 1 in 6, the probability is 1 - the probability of no six.
+						\[
+							P(A) = 1 - \left( \frac{5}{6} \right)^{6}
+						\] 
+					\item For at least 2 in 12, the probability is 1 - the probability of no six - the probability of one six
+						\[
+							P(B) = 1 - \left( \frac{5}{6} \right)^{6} - \binom{12}{1}\left(\frac{1}{6}\right)\left(\frac{5}{6}\right)^{11}
+						\]
+					\item For at least 3 in 18, the probability is 1 - the probability of no six - the probability of one six - the probability of two sixes
+						\[
+							P(C) = 1 - \left(\frac{5}{6}\right)^{6} - \binom{12}{1}\left(\frac{1}{6}\right)^{1}\left(\frac{5}{6}\right)^{15}  - \binom{12}{2}\left(\frac{1}{6}\right)^{2}\left(\frac{5}{6}\right)^{16}
+						\]
+						\[
+							 = 1 - \sum_{k=0}^{2} \left(\frac{18}{k}\right) \left(\frac{1}{6}\right)^{k} \left(\frac{5}{6}\right)^{18-k}
+						\]
+				\end{itemize}
+			\item Conditional Probability
+				\begin{itemize}
+					\item 
+						\[
+							P(A|B) = \frac{P(A \cap B)}{P(B)}, P(B) > 0
+						\]
+					\item Pebble World: Remove $B^{c}$ and renormalize to 1
+					\item Frequentist: Circle reps where B occurred, find the fraction of those where A occurred. 
+					\item Theorems:
+						\begin{enumerate}
+							\item
+								\[
+									P(A \cap B) = P(B) P(A|B) = P(A) P(B|A)
+								\]
+							\item
+								\[ 
+									P(A_1 \cap \cdots \cap A_n) = P(A_1)P(A_2|A_1)P(A_3|A_1 \cap A_2) \cdots P(A_n|A_1 \cap \cdots \cap A_{n-1})
+								\]
+							\item 
+								\[ 
+									P(A|B) = \frac{P(B|A) P(A)}{P(B)}
+								\]
+						\end{enumerate}
+				\end{itemize}
+				
+		\end{itemize}
 \end{document}  
