@@ -15,7 +15,6 @@
 	urlcolor=red,
 	linktoc=all
 }
-
 %SetFonts
 
 %SetFonts
@@ -195,12 +194,67 @@
 								\[ 
 									P(A_1 \cap \cdots \cap A_n) = P(A_1)P(A_2|A_1)P(A_3|A_1 \cap A_2) \cdots P(A_n|A_1 \cap \cdots \cap A_{n-1})
 								\]
-							\item 
+							\item Bayes Rule
 								\[ 
 									P(A|B) = \frac{P(B|A) P(A)}{P(B)}
 								\]
 						\end{enumerate}
 				\end{itemize}
-				
+		\end{itemize}
+\break
+% Lecture 5 Notes
+\section{Lecture 5: Conditioning Continued, Law of Total Probability}
+	\subsection{Notes}
+		\begin{itemize}
+			\item How to Solve a Problem:
+				\begin{enumerate}
+					\item Try simple and extreme cases
+					\item Law of Total Probability: Divide and conquer - break up problem into simpler pieces. (Partition - disjoint and union is all of sample space S)
+						\[
+							P(B) = P(B \cap A_1) + \cdots + P(B \cap A_n)
+						\]
+						\[
+							= P(B|A_1)P(A_1) + \cdots + P(B|A_n)P(A_n)
+						\]
+				\end{enumerate}
+			\item Conditional probability can be used to break a problem up into simpler pieces
+			\item Example: random 2 card hand from standard deck
+				\begin{itemize}
+					\item Find $P(\text{both aces} | \text{have ace})$. You have at least one ace.
+						\[
+							\frac{P(\text{both aces})}{P(\text{have ace}} = \frac{\binom{4}{2} / \binom{52}{2}}{1 - \binom{48}{2}/\binom{52}{2}}
+						\]
+					\item Find $P(\text{both aces} | \text{have Ace of Spades})$. You have a specific ace.
+						\[
+							= \frac{3}{51}
+						\]
+				\end{itemize}
+			\item How does more information change the probability?
+			\item Disease testing - good test on what specifying what your goal is.
+				\begin{itemize}
+					\item Disease afflicts $1\%$ of population, suppose patient tests positive, means the test is asserting that the patient has the disease. Suppose the test is advertised as  $95\%$ accurate.
+					\item $P(D) = .01$
+					\item \textbf{D: Patient has disease}: $P(T|D) = 0.95 = P(T^{c} | D^{c})$
+					\item \textbf{T: Patient tests positive}: $P(D|T)=\frac{P(T|D)P(D)}{P(T)}$		
+					\item Expand the denominator using the law of total probability because the denominator is usually the tricky part:
+						\[
+							\frac{P(T|D) \cdot P(D)}{P(T|D) \cdot P(D) + P(T|D^{c}) \cdot P(D^{c})} = .16
+						\]
+					\item Probability of having the disease is rare already.
+				\end{itemize}
+			\item Common Mistakes with Conditional Probability
+				\begin{enumerate}
+					\item Prosecutor's Fallacy - confusing $P(A|B)$ and $P(B|A)$ - focusing on probability of innocence given evidence, focus on evidence given innocence - sad case of Sally Clark and SIDS
+					\item Confusing $P(A)$ prior with $P(A|B)$ posterior
+					\item Confusing independence with conditional independence
+					\item Conditional Independence: Events A, B are conditionally independent given C if:
+						\[
+							P(A \cap B \cap C) = P(A|C) \cdot P(B|C)
+						\]
+					\item Does conditional independence given C imply independence? No. Example: chess opponent of unknown strength - earlier games given understanding of how strong opponent is, may be that game outcomes are conditionally independent
+						given strength of opponent but not independent unconditionally. Earlier trials give data that can be used - conditioning.
+					\item Does (unconditional) independence imply conditional independence given C? No. Common for an event with multiple causes. Counterexample: Fire alarm goes off, with two causes: (1.) fire, (2.) student making popcorn. Suppose then (1.) 
+						(2.) are independent. But $P(F | A, C^{c}) = 1$ not conditionally independent given alarm.
+				\end{enumerate}
 		\end{itemize}
 \end{document}  
